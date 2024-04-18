@@ -1,15 +1,10 @@
 pipeline {
     agent any
-    
-    parameters {
-        string(name: 'processName', description: 'Enter the name of the process to search for:')
-    }
 
     stages {
         stage('Set Permissions') {
             steps {
                 script {
-                    // Change permissions of the script
                     sh 'chmod +x practica.sh'
                 }
             }
@@ -31,7 +26,6 @@ pipeline {
         stage('Run Script') {
             steps {
                 script {
-                    // Run the script passing the user input as a parameter
                     sh "./practica.sh ${env.PROCESS_NAME}"
                 }
             }
