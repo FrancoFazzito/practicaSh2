@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+    
+    parameters {
+        string(name: 'processName', description: 'Enter the name of the process to search for:')
+    }
+
+    stages {
+        stage('Set Permissions') {
+            steps {
+                script {
+                    // Change permissions of the script
+                    sh 'chmod +x practica.sh'
+                }
+            }
+        }
+        
+        stage('Enter Parameters') {
+            steps {
+                script {
+                    def userInput = input(
+                        id: 'userInput',
+                        message: 'Enter the name of the process to search for:',
+                        parameters: [string(defaultValue: '', description: 'Process Name', name: 'processName')]
+                    )
+                    env.PROCESS_NAME = userInput
+                }
+            }
+        }
+        
+        stage('Run Script') {
+            steps {
+                script {
+                    // Run the script passing the user input as a parameter
+                    sh "./practica.sh ${env.PROCESS_NAME}"
+                }
+            }
+        }
+    }
+}
