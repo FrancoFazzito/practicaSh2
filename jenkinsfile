@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Set Permissions') {
+        stage('Establecer Permisos') {
             steps {
                 script {
                     sh 'chmod +x practica.sh'
@@ -10,20 +10,20 @@ pipeline {
             }
         }
         
-        stage('Enter Parameters') {
+        stage('Ingresar Parámetros') {
             steps {
                 script {
                     def userInput = input(
                         id: 'userInput',
-                        message: 'Enter the name of the process to search for:',
-                        parameters: [string(defaultValue: '', description: 'Process Name', name: 'processName')]
+                        message: 'Ingrese el nombre del proceso a buscar:',
+                        parameters: [string(defaultValue: '', description: 'Nombre del Proceso', name: 'processName')]
                     )
                     env.PROCESS_NAME = userInput
                 }
             }
         }
         
-        stage('Run Script') {
+        stage('Ejecutar Script') {
             steps {
                 script {
                     sh "./practica.sh ${env.PROCESS_NAME}"
